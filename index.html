@@ -1,0 +1,405 @@
+  <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Art Appreciation Portfolio — Lance Daniel</title>
+  <meta name="description" content="Art Appreciation Portfolio by Lance Daniel. Visual analysis, photo essays, museum reflections, and more." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F8F6F2'/%3E%3Ctext x='50' y='58' font-size='46' text-anchor='middle' font-family='serif' fill='%23111' %3EL%3C/text%3E%3C/svg%3E" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            parchment: '#F8F6F2',
+            ink: '#111827',
+            muted: '#6B7280'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Lora', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* global */
+    html { scroll-behavior: smooth; }
+    body { background-color: #F8F6F2; color: #374151; font-family: Inter, sans-serif; }
+
+    /* gentle paper grain (subtle) */
+    .paper-grain {
+      background-image:
+        radial-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mix-blend-mode: normal;
+    }
+
+    /* Prose tweaks */
+    .prose-custom h2, .prose-custom h3 { font-family: Lora, serif; color: #111827; }
+    .prose-custom a { color: #111827; text-decoration: underline; font-weight: 500; }
+
+    /* Background sketch: low opacity, fixed */
+    .bg-sketch {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      z-index: 0;
+      mix-blend-mode: multiply;
+    }
+
+    /* Floating thumbnail positions (decorative) */
+    .float-card {
+      transform: translateY(0);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .float-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(17,24,39,0.12);
+    }
+
+    /* accessible focus outline for buttons/links */
+    .focus-outline:focus {
+      outline: 3px solid rgba(17,24,39,0.12);
+      outline-offset: 3px;
+    }
+
+    /* sticky modal header shading */
+    .modal-header { backdrop-filter: blur(2px); }
+  </style>
+</head>
+<body class="paper-grain relative min-h-screen">
+
+  <!-- Decorative low-opacity sketch SVG (Renaissance-style hand + sketchlines) -->
+  <svg class="bg-sketch" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1">
+        <stop offset="0%" stop-color="#000000" stop-opacity="0.12" />
+        <stop offset="100%" stop-color="#000000" stop-opacity="0.06" />
+      </linearGradient>
+    </defs>
+    <!-- big faint hand (stylized path) -->
+    <g transform="translate(120,60) scale(1.6)">
+      <path d="M300 120 C360 80 420 70 490 80 C540 86 600 110 680 160 C760 210 820 260 840 310 C860 360 740 390 650 410 C580 425 480 460 380 440 C300 425 240 360 210 310 C180 260 220 190 300 120 Z"
+            fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M700 260 L980 60" stroke="url(#g)" stroke-width="4" stroke-linecap="round" />
+      <path d="M360 420 C420 450 520 470 620 470" stroke="url(#g)" stroke-width="3" stroke-linecap="round" />
+    </g>
+
+    <!-- faint sketch crosshatches -->
+    <g transform="translate(0,430) scale(1.2)">
+      <path d="M10 40 L1600 40" stroke="url(#g)" stroke-width="1" stroke-dasharray="6 12" />
+      <path d="M50 100 L1600 100" stroke="url(#g)" stroke-width="1" stroke-dasharray="6 14" />
+    </g>
+  </svg>
+
+  <!-- Page container -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
+    <!-- Top bar -->
+    <header class="flex items-center justify-between py-5">
+      <div class="flex items-center gap-4">
+        <div class="text-2xl font-serif text-ink">Lance Daniel</div>
+        <div class="text-xs text-muted">Art Appreciation Portfolio</div>
+      </div>
+      <nav class="flex items-center gap-6 text-sm">
+        <a class="hover:underline focus-outline" href="#projects">Projects</a>
+        <a class="hover:underline focus-outline" href="#reflections">Reflections</a>
+        <a class="hover:underline focus-outline" href="#about">About</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <main>
+      <section class="relative overflow-visible pt-8 pb-16 lg:py-28">
+        <div class="mx-auto max-w-4xl text-center">
+          <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl leading-tight text-ink font-extrabold tracking-tight">
+            Art Appreciation Portfolio
+          </h1>
+          <p class="mt-4 text-lg text-muted">Exploring the beauty of human expression through analysis, photography, and curated reflections.</p>
+          <p class="mt-2 text-sm text-muted">By <strong class="font-serif text-ink">Lance Daniel</strong></p>
+
+          <!-- Call to action -->
+          <div class="mt-8 flex justify-center gap-4">
+            <a href="#projects" class="inline-flex items-center px-6 py-3 bg-ink text-white rounded-full text-sm font-medium shadow hover:brightness-95 focus-outline" role="button">View My Works</a>
+            <a href="#reflections" class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-ink hover:bg-gray-50 focus-outline">Read Reflections</a>
+          </div>
+        </div>
+
+        <!-- Floating thumbnail previews (decorative) -->
+        <div class="pointer-events-none">
+          <div class="hidden md:block absolute left-4 top-24 w-48 shadow-md float-card rounded overflow-hidden transform -rotate-6" aria-hidden="true">
+            <img src="https://placehold.co/480x300/D8C0A7/444?text=Visual+Study" alt="Thumbnail: Visual study placeholder" class="w-full h-full object-cover">
+          </div>
+
+          <div class="hidden lg:block absolute right-12 top-6 w-56 shadow-md float-card rounded overflow-hidden transform rotate-3" aria-hidden="true">
+            <img src="https://placehold.co/560x340/EBE3D5/555?text=Photo+Essay" alt="Thumbnail: Photo essay placeholder" class="w-full h-full object-cover">
+          </div>
+
+          <div class="hidden md:block absolute left-14 top-64 w-36 shadow-md float-card rounded overflow-hidden transform -rotate-3" aria-hidden="true">
+            <img src="https://placehold.co/360x220/A0937D/FFF?text=Museum+Visit" alt="Thumbnail: Virtual museum visit sample" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </section>
+
+      <!-- Explore / Projects Grid -->
+      <section id="projects" class="py-12 lg:py-20">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-serif text-ink font-bold text-left">Featured Works</h2>
+          <hr class="border-t border-gray-300 mt-4 mb-8" />
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <article class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col transition" aria-labelledby="proj1">
+              <img class="w-full h-52 object-cover" src="https://placehold.co/800x520/D8C0A7/444?text=Visual+Analysis" alt="Visual analysis closeup of painting detail: placeholder">
+              <div class="p-6 flex flex-col gap-3 flex-1">
+                <h3 id="proj1" class="text-xl font-serif text-ink">Visual Analysis</h3>
+                <p class="text-muted flex-grow">A detailed look at the formal elements, composition, and historical context of selected artworks.</p>
+                <div class="mt-4">
+                  <button onclick="openModal('modal-visual-analysis')" class="text-sm text-ink font-medium hover:underline focus-outline">View project →</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col transition" aria-labelledby="proj2">
+              <img class="w-full h-52 object-cover" src="https://placehold.co/800x520/A0937D/FFF?text=Photo+Essay" alt="Photo essay: street photography series, placeholder">
+              <div class="p-6 flex flex-col gap-3 flex-1">
+                <h3 id="proj2" class="text-xl font-serif text-ink">Photo Essay</h3>
+                <p class="text-muted flex-grow">Narrative photography exploring a theme through sequential images and captions.</p>
+                <div class="mt-4"><button onclick="openModal('modal-photo-essay')" class="text-sm text-ink font-medium hover:underline focus-outline">View project →</button></div>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col transition" aria-labelledby="proj3">
+              <img class="w-full h-52 object-cover" src="https://placehold.co/800x520/B0A695/FFF?text=Virtual+Museum" alt="Virtual museum visit screenshot placeholder">
+              <div class="p-6 flex flex-col gap-3 flex-1">
+                <h3 id="proj3" class="text-xl font-serif text-ink">Virtual Museum Visit</h3>
+                <p class="text-muted flex-grow">Reflections and notes from curated online tours and major exhibitions.</p>
+                <div class="mt-4"><button onclick="openModal('modal-museum-visit')" class="text-sm text-ink font-medium hover:underline focus-outline">View project →</button></div>
+              </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col transition" aria-labelledby="proj4">
+              <img class="w-full h-52 object-cover" src="https://placehold.co/800x520/776B5D/FFF?text=Global+Culture" alt="Integration of global culture artwork placeholder">
+              <div class="p-6 flex flex-col gap-3 flex-1">
+                <h3 id="proj4" class="text-xl font-serif text-ink">Integration of Global Culture</h3>
+                <p class="text-muted flex-grow">Examination of how different cultural influences appear within artworks.</p>
+                <div class="mt-4"><button onclick="openModal('modal-global-culture')" class="text-sm text-ink font-medium hover:underline focus-outline">View project →</button></div>
+              </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col transition" aria-labelledby="proj5">
+              <img class="w-full h-52 object-cover" src="https://placehold.co/800x520/EBE3D5/555?text=Appropriation" alt="Appropriation project placeholder">
+              <div class="p-6 flex flex-col gap-3 flex-1">
+                <h3 id="proj5" class="text-xl font-serif text-ink">Appropriation</h3>
+                <p class="text-muted flex-grow">A piece that re-contextualizes existing imagery and media with commentary.</p>
+                <div class="mt-4"><button onclick="openModal('modal-appropriation')" class="text-sm text-ink font-medium hover:underline focus-outline">View project →</button></div>
+              </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden flex flex-col transition" aria-labelledby="proj6">
+              <img class="w-full h-52 object-cover" src="https://placehold.co/800x520/F3EEEA/444?text=Art+Talk" alt="Art talk reflection placeholder">
+              <div class="p-6 flex flex-col gap-3 flex-1">
+                <h3 id="proj6" class="text-xl font-serif text-ink">Art Talk Reflection</h3>
+                <p class="text-muted flex-grow">Notes and reflections on lectures and artist talks attended during the course.</p>
+                <div class="mt-4"><button onclick="openModal('modal-art-talk')" class="text-sm text-ink font-medium hover:underline focus-outline">View project →</button></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reflections -->
+      <section id="reflections" class="py-12 lg:py-20">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-3xl font-serif text-ink font-bold text-left">Reflections & Lessons Learned</h2>
+          <div class="prose-custom prose prose-lg mt-6 bg-white rounded-lg shadow-md border border-gray-100 p-8">
+            <p>Going through GED108 was a transformative experience. Before this course, art for me was something to look at; now it’s a form of language connected to identity, history, and culture.</p>
+            <p>I learned how to read composition, understand symbolism, and appreciate how context shapes meaning. This portfolio gathers the work and reflections I completed during the course.</p>
+            <p><em>Tip:</em> Replace these paragraphs with your reflections — consider short anecdotes about a lecture, a piece that changed your thinking, or how making a photo essay challenged your perspective.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- About / Contact -->
+      <section id="about" class="py-12 lg:py-20">
+        <div class="max-w-3xl mx-auto text-left">
+          <h2 class="text-2xl font-serif text-ink font-bold">About the Artist</h2>
+          <p class="mt-4 text-muted">Hi — I’m <strong class="font-serif text-ink">Lance Daniel</strong>, a student exploring visual storytelling, composition, and cultural narratives through art appreciation coursework. I work primarily with observational writing, photodocumentary, and contextual visual analysis.</p>
+          <p class="mt-3 text-muted">If you’d like feedback on work or collaboration, include a simple contact method here (email or social handle).</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-10 mt-12 border-t border-gray-200">
+      <p class="text-sm text-muted">&copy; 2025 Lance Daniel — GED108 Art Appreciation</p>
+      <p class="text-xs text-muted mt-1">Website styled with Tailwind CSS • Inspired by gallery themes</p>
+    </footer>
+  </div>
+
+  <!-- MODALS (hidden by default) -->
+  <!-- Modal template: accessible, close on overlay click or ESC -->
+  <div id="modal-visual-analysis" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4" onclick="closeModal('modal-visual-analysis')">
+    <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modal-visual-analysis-title">
+      <div class="flex justify-between items-center p-4 border-b modal-header sticky top-0 bg-white z-10">
+        <h3 id="modal-visual-analysis-title" class="text-2xl font-serif text-ink">Visual Analysis</h3>
+        <button onclick="closeModal('modal-visual-analysis')" aria-label="Close modal" class="text-gray-500 hover:text-gray-700 focus-outline">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6 prose prose-lg prose-custom">
+        <img src="https://placehold.co/1000x600/D8C0A7/444?text=Analyzed+Artwork" alt="Full artwork for visual analysis placeholder" class="w-full rounded-lg mb-6 shadow-md">
+        <h4 class="font-serif">[Title of Artwork]</h4>
+        <p><strong>Artist:</strong> [Artist's Name]</p>
+        <p><strong>Year:</strong> [Year]</p>
+        <p class="mt-4">Write your visual analysis here: composition, color, line, space, texture, symbolism, context, and your interpretation. Replace this with your full content.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-photo-essay" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4" onclick="closeModal('modal-photo-essay')">
+    <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modal-photo-essay-title">
+      <div class="flex justify-between items-center p-4 border-b modal-header sticky top-0 bg-white z-10">
+        <h3 id="modal-photo-essay-title" class="text-2xl font-serif text-ink">Photo Essay</h3>
+        <button onclick="closeModal('modal-photo-essay')" aria-label="Close modal" class="text-gray-500 hover:text-gray-700 focus-outline">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6 prose prose-lg prose-custom">
+        <p>This is the introduction to your photo essay. Explain the theme and narrative you want to tell.</p>
+        <div class="space-y-6 mt-6">
+          <img src="https://placehold.co/1000x600/A0937D/FFF?text=Photo+1" alt="Photo essay image 1 placeholder" class="w-full rounded-lg shadow-md">
+          <p class="text-center text-muted italic">Caption for Photo 1 — significance and context.</p>
+
+          <img src="https://placehold.co/1000x600/A0937D/FFF?text=Photo+2" alt="Photo essay image 2 placeholder" class="w-full rounded-lg shadow-md">
+          <p class="text-center text-muted italic">Caption for Photo 2.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-museum-visit" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4" onclick="closeModal('modal-museum-visit')">
+    <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modal-museum-visit-title">
+      <div class="flex justify-between items-center p-4 border-b modal-header sticky top-0 bg-white z-10">
+        <h3 id="modal-museum-visit-title" class="text-2xl font-serif text-ink">Virtual Museum Visit</h3>
+        <button onclick="closeModal('modal-museum-visit')" aria-label="Close modal" class="text-gray-500 hover:text-gray-700 focus-outline">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6 prose prose-lg prose-custom">
+        <img src="https://placehold.co/1000x600/B0A695/FFF?text=Virtual+Tour+Screenshot" alt="Virtual museum tour screenshot placeholder" class="w-full rounded-lg mb-6 shadow-md">
+        <p>Write your reflection on the virtual visit: what moved you, what surprised you, key works that resonated, and your takeaways.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-global-culture" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4" onclick="closeModal('modal-global-culture')">
+    <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <div class="flex justify-between items-center p-4 border-b modal-header sticky top-0 bg-white z-10">
+        <h3 class="text-2xl font-serif text-ink">Integration of Global Culture</h3>
+        <button onclick="closeModal('modal-global-culture')" aria-label="Close modal" class="text-gray-500 hover:text-gray-700 focus-outline">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6 prose prose-lg prose-custom">
+        <img src="https://placehold.co/1000x600/776B5D/FFF?text=Global+Culture+Project" alt="Global culture project placeholder" class="w-full rounded-lg mb-6 shadow-md">
+        <p>Context and analysis of how global influences appear in particular artworks. Replace with your own content.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-appropriation" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4" onclick="closeModal('modal-appropriation')">
+    <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <div class="flex justify-between items-center p-4 border-b modal-header sticky top-0 bg-white z-10">
+        <h3 class="text-2xl font-serif text-ink">Appropriation</h3>
+        <button onclick="closeModal('modal-appropriation')" aria-label="Close modal" class="text-gray-500 hover:text-gray-700 focus-outline">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6 prose prose-lg prose-custom">
+        <img src="https://placehold.co/1000x600/EBE3D5/555?text=Appropriation+Piece" alt="Appropriation piece placeholder" class="w-full rounded-lg mb-6 shadow-md">
+        <p>Discuss the concept and execution of the appropriation piece. Replace with your write-up and images.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-art-talk" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4" onclick="closeModal('modal-art-talk')">
+    <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <div class="flex justify-between items-center p-4 border-b modal-header sticky top-0 bg-white z-10">
+        <h3 class="text-2xl font-serif text-ink">Art Talk Reflection</h3>
+        <button onclick="closeModal('modal-art-talk')" aria-label="Close modal" class="text-gray-500 hover:text-gray-700 focus-outline">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="p-6 prose prose-lg prose-custom">
+        <p><strong>Art Talk Title:</strong> [Title Here]</p>
+        <p><strong>Speaker:</strong> [Name]</p>
+        <p class="mt-4">Summary and reflections on the talk.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript: modal controls + ESC to close -->
+  <script>
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.classList.add('flex');
+      document.documentElement.style.overflow = 'hidden'; // prevent background scroll
+      // focus trap (basic): focus the modal for keyboard users
+      const dialog = el.querySelector('[role="dialog"]') || el.children[0];
+      if (dialog) dialog.focus();
+      // add esc listener
+      document.addEventListener('keydown', escListener);
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('flex');
+      el.classList.add('hidden');
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('keydown', escListener);
+    }
+
+    function escListener(e) {
+      if (e.key === 'Escape') {
+        // close any open modal
+        document.querySelectorAll('[id^="modal-"]').forEach(m => {
+          if (!m.classList.contains('hidden')) {
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+          }
+        });
+        document.documentElement.style.overflow = '';
+        document.removeEventListener('keydown', escListener);
+      }
+    }
+
+    // progressive enhancement: add keyboard accessibility to modal open buttons
+    document.querySelectorAll('button[onclick^="openModal"]').forEach(btn => {
+      btn.setAttribute('tabindex', '0');
+    });
+  </script>
+</body>
+</html>
